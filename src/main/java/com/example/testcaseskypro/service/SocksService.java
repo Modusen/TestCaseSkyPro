@@ -21,15 +21,15 @@ public class SocksService {
         foundSocks.setQuantity(foundSocks.getQuantity() - socks.getQuantity());
         return socksRepository.save(foundSocks);
     }
-    public List<Socks> getSocksByParametersWhereCottonPartGreaterThan(String color, Integer cottonPart) {
+    public List<Socks> getSocksByParametersWhereCottonPartIsGreaterThan(String color, Integer cottonPart) {
         return socksRepository.findAllByColorEqualsAndCottonPartIsGreaterThan(color, cottonPart);
     }
 
-    public List<Socks> getSocksByParametersWhereCottonPartLessThan(String color, Integer cottonPart) {
+    public List<Socks> getSocksByParametersWhereCottonPartIsLessThan(String color, Integer cottonPart) {
         return socksRepository.findAllByColorEqualsAndCottonPartIsLessThan(color, cottonPart);
     }
 
-    public List<Socks> getSocksByParametersWhereCottonPartEqual(String color, Integer cottonPart) {
+    public List<Socks> getSocksByParametersWhereCottonPartIsEqual(String color, Integer cottonPart) {
         return socksRepository.findAllByColorEqualsAndCottonPartEquals(color, cottonPart);
     }
 

@@ -59,11 +59,11 @@ public class SocksController {
         }
         switch (operation) {
             case ("moreThan"):
-                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartGreaterThan(color, cottonPart));
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsGreaterThan(color, cottonPart));
             case ("lessThan"):
-                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartLessThan(color, cottonPart));
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsLessThan(color, cottonPart));
             case ("equal"):
-                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartEqual(color, cottonPart));
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsEqual(color, cottonPart));
             default:
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
