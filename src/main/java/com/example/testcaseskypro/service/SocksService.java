@@ -13,7 +13,12 @@ public class SocksService {
     private final SocksRepository socksRepository;
 
     public Socks addSocks(Socks socks) {
-        return socksRepository.save(socks);
+        Socks foundSocks = socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
+        if (foundSocks == null) {
+            return socksRepository.save(socks);
+        }
+        foundSocks.setQuantity(foundSocks.getQuantity() + socks.getQuantity());
+        return socksRepository.save(foundSocks);
     }
 
     public Socks subtractSocks(Socks socks) {
@@ -21,6 +26,7 @@ public class SocksService {
         foundSocks.setQuantity(foundSocks.getQuantity() - socks.getQuantity());
         return socksRepository.save(foundSocks);
     }
+
     public List<Socks> getSocksByParametersWhereCottonPartIsGreaterThan(String color, Integer cottonPart) {
         return socksRepository.findAllByColorEqualsAndCottonPartIsGreaterThan(color, cottonPart);
     }
