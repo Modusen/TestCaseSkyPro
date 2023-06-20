@@ -54,7 +54,7 @@ public class SocksController {
     public ResponseEntity<List<Socks>> getSocks(@RequestParam("color") String color,
                                                 @RequestParam("operation") String operation,
                                                 @RequestParam("cottonPart") int cottonPart) {
-        if (cottonPart < 0 || cottonPart > 100) {
+        if (cottonPart < 0 || cottonPart > 100 || color.isEmpty() || color.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         switch (operation) {
