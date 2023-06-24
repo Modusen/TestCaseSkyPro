@@ -32,7 +32,9 @@ public class SocksController {
 
     @PostMapping("/outcome")
     public ResponseEntity<Socks> subtractSocks(@RequestBody Socks socks) {
-        return ResponseEntity.ok(socksService.subtractSocks(socks));
+        return socksService.subtractSocks(socks)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @GetMapping()
@@ -40,11 +42,11 @@ public class SocksController {
                                                              @RequestParam("operation") String operation,
                                                              @RequestParam("cottonPart") int cottonPart) {
         List<Socks> result = getSocks(color, operation, cottonPart).getBody();
-        if (result == null){
+        if (result == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         int sum = 0;
-        for (Socks socks: result) {
+        for (Socks socks : result) {
             sum += socks.getQuantity();
         }
         return ResponseEntity.ok(sum);
