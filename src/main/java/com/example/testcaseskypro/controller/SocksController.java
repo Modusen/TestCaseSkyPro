@@ -32,25 +32,42 @@ public class SocksController {
 
     @PostMapping("/outcome")
     public ResponseEntity<Socks> subtractSocks(@RequestBody Socks socks) {
-        return ResponseEntity.ok(socksService.subtractSocks(socks));
+        return socksService.subtractSocks(socks)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @GetMapping()
+    public ResponseEntity<Integer> getOverallQuantityOfSocks(@RequestParam("color") String color,
+                                                             @RequestParam("operation") String operation,
+                                                             @RequestParam("cottonPart") int cottonPart) {
+        List<Socks> result = getSocks(color, operation, cottonPart).getBody();
+        if (result == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        int sum = 0;
+        for (Socks socks : result) {
+            sum += socks.getQuantity();
+        }
+        return ResponseEntity.ok(sum);
+    }
+
+    @GetMapping("/getSocks")
     public ResponseEntity<List<Socks>> getSocks(@RequestParam("color") String color,
                                                 @RequestParam("operation") String operation,
                                                 @RequestParam("cottonPart") int cottonPart) {
-        if (cottonPart < 0 || cottonPart > 100) {
+        if (cottonPart < 0 || cottonPart > 100 || color.isEmpty() || color.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-            switch (operation) {
-                case ("moreThan"):
-                    return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartGreaterThan(color, cottonPart));
-                case ("lessThan"):
-                    return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartLessThan(color, cottonPart));
-                case ("equal"):
-                    return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartEqual(color, cottonPart));
-                default:
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
+        switch (operation) {
+            case ("moreThan"):
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsGreaterThan(color, cottonPart));
+            case ("lessThan"):
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsLessThan(color, cottonPart));
+            case ("equal"):
+                return ResponseEntity.ok(socksService.getSocksByParametersWhereCottonPartIsEqual(color, cottonPart));
+            default:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

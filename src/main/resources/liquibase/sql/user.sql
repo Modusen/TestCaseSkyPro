@@ -12,3 +12,30 @@ CREATE TABLE IF NOT EXISTS socks
     quantity    INTEGER NOT NULL
 );
 
+--changeset dmitriy:2
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('red', 50, 70);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('red', 80, 45);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('blue', 95, 150);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('blue', 20, 45);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('black', 78, 70);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('black', 10, 15);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('black', 95, 49);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('green', 99, 900);
+
+INSERT INTO socks (color, cotton_part, quantity)
+VALUES ('green', 38, 25);
